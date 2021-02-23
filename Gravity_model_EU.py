@@ -89,7 +89,7 @@ class Gravity:
 S_i = 1.70E+12
 instance = Gravity(S_i) 
 
-vgravity_data = {'country' : EU, 'trade' : list(EU_trade.values()), 'GDP' : list(EU_GDP.values()), 'MRT' : instance.MRT(EU_Dist)}
+gravity_data = {'country' : EU, 'trade' : list(EU_trade.values()), 'GDP' : list(EU_GDP.values()), 'MRT' : instance.MRT(EU_Dist)}
 df_gravity = pd.DataFrame(gravity_data, columns = ['country','trade','GDP','MRT'])
 df_gravity.set_index('country',inplace=True)      
 
