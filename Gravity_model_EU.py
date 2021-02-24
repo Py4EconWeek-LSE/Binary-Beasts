@@ -70,18 +70,18 @@ class Gravity:
     def __init__(self, S_i):
         self.S_i = S_i
 
-  #bilateral resistance term      
-    def BRT(self, Dist, RTA):
+  #bilateral accessibility, , the higher the more accessible, inversely proportional to distance      
+    def BA(self, Dist, RTA):
         return (np.exp(-np.log(Dist) + 0.5*RTA))
     
-  #multilateral resistance term
-    def MRT(self, EU_Dist):
+  #bilateral accessibility in EU
+    def BA_EU(self, EU_Dist):
         EU_Dist_array = np.array([])
         EU_BRT_array = np.array([])
         for Dist in EU_Dist.values():
             EU_Dist_array = np.append(EU_Dist_array,Dist)
         for Dist in EU_Dist_array:
-            EU_BRT_array = np.append(EU_BRT_array, self.BRT(Dist,1))
+            EU_BRT_array = np.append(EU_BRT_array, self.BA(Dist,1))
         return (EU_BRT_array)
         
         
@@ -89,8 +89,8 @@ class Gravity:
 S_i = 1.70E+12
 instance = Gravity(S_i) 
 
-gravity_data = {'country' : EU, 'trade' : list(EU_trade.values()), 'GDP' : list(EU_GDP.values()), 'MRT' : instance.MRT(EU_Dist)}
-df_gravity = pd.DataFrame(gravity_data, columns = ['country','trade','GDP','MRT'])
+gravity_data = {'country' : EU, 'trade' : list(EU_trade.values()), 'GDP' : list(EU_GDP.values()), 'EU Bilateral Accessibility' : instance.BA_EU(EU_Dist)}
+df_gravity = pd.DataFrame(gravity_data, columns = ['country','trade','GDP','EU Bilateral Accessibility'])
 df_gravity.set_index('country',inplace=True)      
 
 print(df_gravity)
