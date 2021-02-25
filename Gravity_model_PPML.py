@@ -18,11 +18,8 @@ df = pd.read_excel(url)
 print(df.shape)
 print(df.head())
 
-df1 = pd.read_excel(url)
-df1 = df1.dropna()
-
 #drop null values from relevant columns in df 
-trade_data = df[['exp','imp', 'trade', 'sector','gdp_exp', 'gdp_imp', 'distw']]
+trade_data = df[['exp','imp', 'year', 'trade', 'sector','gdp_exp', 'gdp_imp', 'distw']]
 trade_data = trade_data.dropna()
 
 
@@ -107,17 +104,18 @@ print(df_gravity)
 print('GBP_GDP' +' = '+ str(S_i))
 
 
-gme_data = gme.EstimationData(data_frame = df1,
+gme_data = gme.EstimationData(data_frame = trade_data,
                               imp_var_name = 'imp',
                               exp_var_name = 'exp',
                               trade_var_name = 'trade',
+                              year_var_name= 'year',
                               sector_var_name= 'sector')
 print(gme_data)
 gme_data.info()
 gme_data.describe()
 
 
-tinbergen_spec = gme.EstimationModel(estimation_data = df1,
+tinbergen_spec = gme.EstimationModel(estimation_data = trade_data,
                                 lhs_var = 'trade',
                                 rhs_var = ['distw','gdp_exp','gdp_imp'],
                                 drop_missing = True)
