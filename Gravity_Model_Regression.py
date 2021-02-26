@@ -92,5 +92,20 @@ print(resultIV.summary())
 
 #impact of EU membership on trade size
 
+#Including dummy EU variable in basic regression model
+
+model_EU_dummy = gme.EstimationModel(estimation_data = gme_data,
+                                         lhs_var = 'trade',
+                                         rhs_var = ['log_gdp_exp',
+                                                    'log_gdp_imp',
+                                                    'log_distance',
+                                                    'comlang_off',
+                                                    'contig','between_EU'
+                                                    ])
+EU_dummy_estimates = model_EU_dummy.estimate()
+
+result_EU_dummy = EU_dummy_estimates['all']
+print(result_EU_dummy.summary())
+
 
 
